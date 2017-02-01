@@ -1,0 +1,7 @@
+-lib hxgimp
+--each
+-main New
+-python bin/new_file.py
+--next
+-main Open
+-python bin/open_file.py

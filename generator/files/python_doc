@@ -1,0 +1,407 @@
+Parasite Objects
+
+In gimp >= 1.1, it is possible to attach arbitrary data to an image through the use of parasites. Parasites are simply wrappers for the data, containing its name and some flags. Parasites have the following parameters:
+
+Parasite Members
+
+data
+The data for the parasite — a string
+
+flags
+The flags for the parasite
+
+is_persistent
+True if this parasite is persistent
+
+is_undoable
+True if this parasite is undoable
+
+name
+The name of the parasite
+
+Parasite Methods
+
+copy
+
+is_type(type)
+
+has_flag(flag)
+
+parasite_find(name)
+find a parasite by its name.
+
+parasite_attach(parasite)
+Attach a parasite to this object.
+
+attach_new_parasite(name, flags, data)
+Create a new parasite and attach it.
+
+parasite_detach(name)
+Detach the named parasite
+
+Image Objects
+
+This is the object that represents an open image. In this section, image represents a generic image object.
+
+Image Members
+
+image.active_channel
+This is the active channel of the image. You can also assign to this member, or None if there is no active channel.
+
+image.active_layer
+This is the active layer of the image. You can also assign to this member, or None if there is no active layer.
+
+image.base_type
+This is the type of the image (eg RGB, INDEXED).
+
+image.channels
+This is a list of the channels of the image. Altering this list has no effect, and you can not assign to this member.
+
+image.cmap
+This is the colour map for the image.
+
+image.filename
+This is the filename for the image. A file load or save handler might assign to this.
+
+image.height
+This is the height of the image. You can't assign to this member.
+
+image.floating_selection
+The floating selection layer, or None if there is no floating selection.
+
+image.layers
+This is a list of the layers of the image.
+
+image.selection
+The selection mask for the image.
+
+image.width
+This is the width of the image. You can't assign to this member.
+
+Image Methods
+
+image.add_channel(channel, position)
+Adds channel to image in position position.
+
+image.add_layer(layer, position)
+Adds layer to image in position position.
+
+image.add_layer_mask(layer, mask)
+Adds the mask mask to layer.
+
+image.clean_all()
+Unsets the dirty flag on the image.
+
+image.disable_undo()
+Disables undo for image.
+
+image.enable_undo()
+Enables undo for image. You might use these commands round a plugin, so that the plug-in's actions can be undone in a single step.
+
+image.flatten()
+Returns the resulting layer after merging all the visible layers, discarding non visible ones and stripping the alpha channel.
+
+image.get_component_active(component)
+Returns true if component (one of the *_CHANNEL constants) is active.
+
+image.get_component_visible(component)
+Returns true if component is visible.
+
+image.set_component_active(component, active)
+Sets the activeness of component.
+
+image.set_component_visible(component, active)
+Sets the visibility of component.
+
+image.lower_channel(channel)
+Lowers channel.
+
+image.lower_layer(layer)
+Lowers layer.
+
+image.merge_visible_layers(type)
+Merges the visible layers of image using the given merge type.
+
+image.pick_correlate_layer(x, y)
+Returns the layer that is visible at the point (x,y), or None if no layer matches.
+
+image.raise_channel(channel)
+Raises channel.
+
+image.raise_layer(layer)
+Raises layer.
+
+image.remove_channel(channel)
+Removes channel from image.
+
+image.remove_layer(layer)
+Removes layer from image.
+
+image.remove_layer_mask(layer, mode)
+Removes the mask from layer, with the given mode (either APPLY or DISCARD).
+
+image.resize(width, height, x, y)
+Resizes the image to size (width, height) and places the old contents at position (x,y).
+
+Channel Objects
+
+These objects represent a GIMP Image's colour channels. In this section, channel will refer to a generic channel object.
+
+Channel Members
+
+channel.colour
+The colour of the channel.
+
+channel.color
+The colour of the channel.
+
+channel.height
+The height of the channel.
+
+channel.width
+The width of the channel.
+
+channel.image
+The image the channel belongs to, or None if it isn't attached yet.
+
+channel.layer
+The channel's layer (??) or None if one doesn't exist.
+
+channel.layer_mask
+Non zero if the channel is a layer mask.
+
+channel.name
+The name of the channel.
+
+channel.opacity
+The opacity of the channel.
+
+channel.show_masked
+The show_masked value of the channel.
+
+channel.visible
+Non-zero if the channel is visible.
+
+Channel Methods
+
+channel.copy()
+returns a copy of the channel.
+
+Layer Objects
+
+Layer objects represent the layers of a GIMP image. In this section I will refer to a generic layer called layer.
+
+Layer Members
+
+layer.apply_mask
+The apply mask setting. (non zero if the layer mask is being composited with the layer's alpha channel).
+
+layer.bpp
+The number of bytes per pixel.
+
+layer.edit_mask
+The edit mask setting. (non zero if the mask is active, rather than the layer).
+
+layer.height
+The height of the layer.
+
+layer.image
+The image the layer is part of, or None if the layer isn't attached.
+
+layer.is_floating_selection
+Non zero if this layer is the image's floating selection.
+
+layer.mask
+The layer's mask, or None if it doesn't have one.
+
+layer.mode
+The mode of the layer.
+
+layer.name
+The name of the layer.
+
+layer.opacity
+The opacity of the layer.
+
+layer.preserve_transparency
+The layer's preserve transparency setting.
+
+Layer Methods
+
+layer.add_alpha()
+Adds an alpha component to the layer.
+
+layer.copy([alpha])
+Creates a copy of the layer, optionally with an alpha layer.
+
+layer.create_mask(type)
+Creates a layer mask of type type.
+
+layer.resize(w, h, x, y)
+Resizes the layer to (w, h), positioning the original contents at (x,y).
+
+layer.scale(h, w, origin)
+Scales the layer to (w, h), using the specified origin (local or image).
+
+layer.set_offsets(x, y)
+Sets the offset of the layer, relative to the image's origin
+
+layer.translate(x, y)
+Moves the layer to (x, y) relative to its current position.
+
+Drawable Objects
+
+Both layers and channels are drawables. Hence there are a number of operations that can be performed on both objects. They also have some common attributes and methods. In the description of these attributes, I will refer to a generic drawable called drawable.
+
+Drawable Members
+
+drawable.bpp
+The number of bytes per pixel.
+
+drawable.is_colour
+Non zero if the drawable is colour.
+
+drawable.is_color
+Non zero if the drawable is colour.
+
+drawable.is_rgb
+Non zero if the drawable is colour.
+
+drawable.is_grey
+Non zero if the drawable is greyscale.
+
+drawable.is_gray
+Non zero if the drawable is greyscale.
+
+drawable.has_alpha
+Non zero if the drawable has an alpha channel.
+
+drawable.height
+The height of the drawable.
+
+drawable.image
+The image the drawable belongs to.
+
+drawable.is_indexed
+Non zero if the drawable uses an indexed colour scheme.
+
+drawable.mask_bounds
+The bounds of the drawable's selection.
+
+drawable.name
+The name of the drawable.
+
+drawable.offsets
+The offset of the top left hand corner of the drawable.
+
+drawable.type
+The type of the drawable.
+
+drawable.visible
+Non zero if the drawable is visible.
+
+drawable.width
+The width of the drawable.
+
+Drawable Methods
+
+drawable.fill(fill_type)
+Fills the drawable with given fill_type (one of the *_FILL constants).
+
+drawable.flush()
+Flush the changes to the drawable.
+
+drawable.get_pixel_rgn(x, y, w, h, [dirty, [shadow])
+Creates a pixel region for the drawable. It will cover the region with origin (x,y) and dimensions w x h. The dirty argument sets whether any changes to the pixel region will be reflected in the drawable (default is TRUE). The shadow argument sets whether the pixel region acts on the shadow tiles or not (default is FALSE). If you draw on the shadow tiles, you must call drawable.merge_shadow() for changes to take effect.
+
+drawable.get_tile(shadow, row, col)
+Get a tile at (row, col). Either on or off the shadow buffer.
+
+drawable.get_tile2(shadow, x, y)
+Get the tile that contains the pixel (x, y).
+
+drawable.merge_shadow()
+Merge the shadow buffer back into the drawable.
+
+drawable.update(x, y, w, h)
+Update the given portion of the drawable.
+
+Tile Objects
+
+Tile objects represent the way GIMP stores information. A tile is basically just a 64x64 pixel region of the drawable. The reason GIMP breaks the image into small pieces like this is so that the whole image doesn't have to be loaded into memory in order to alter one part of it. This becomes important with larger images.
+
+In Gimp-Python, you would use Tiles if you wanted to perform some low level operation on the image, instead of using procedures in the PDB. This type of object gives a Gimp-Python plugin the power of a C plugin, rather than just the power of a Script-Fu script. Tile objects are created with either the drawable.get_tile() or drawable.get_tile2() functions. In this section, I will refer to a generic tile object named tile.
+
+Tile Members
+
+All tile members are read only.
+
+tile.bpp
+The number of bytes per pixel.
+
+tile.dirty
+If there have been changes to the tile since it was last flushed.
+
+tile.drawable
+The drawable that the tile is from.
+
+tile.eheight
+The actual height of the tile.
+
+tile.ewidth
+The actual width of the tile.
+
+tile.ref_count
+The reference count of the tile. (this is independent of the Python object reference count).
+
+tile.shadow
+Non zero if the tile is part of the shadow buffer.
+
+Tile Methods
+
+tile.flush()
+Flush any changes in the tile. Note that the tile is automatically flushed when the Python object is deleted from memory.
+
+Tile Mapping Behaviour
+
+Tile objects also act as a mapping, or sequence. You can access the pixels in the tile in one of two ways. You can either access them with a single number, which refers to its position in the tile (eg. tile [64] refers to the first pixel in the second row of a 64x64 pixel tile). The other way is with a tuple, representing the coordinates on the tile (eg. tile [0, 1] refers to the first pixel on the second row of the tile).
+
+The type of these subscripts is a string of length tile.bpp. When you assign to a subscript, the dirty flag is automatically set on the tile, so you don't have to explicitly set the flag, or flush the tile.
+
+Pixel Regions Objects
+
+Pixel region objects give an interface for low level operations to act on large regions of an image, instead of on small 64x64 pixel tiles. In this section I will refer to a generic pixel region called pr. For an example of a pixel region's use, please see the example plugin whirlpinch.py .
+
+Pixel Region Members
+
+pr.drawable
+The drawable this pixel region is for.
+
+pr.bpp
+The number of bytes per pixel for the drawable.
+
+pr.rowstride
+The rowstride for the pixel region.
+
+pr.x
+The x coordinate of the top left hand corner.
+
+pr.y
+The y coordinate of the top left hand corner.
+
+pr.w
+The width of the pixel region.
+
+pr.h
+The height of the pixel region.
+
+pr.dirty
+Non zero if changes to the pixel region will be reflected in the drawable.
+
+pr.shadow
+Non zero if the pixel region acts on the shadow tiles of the drawable.
+
+Pixel Region Methods
+
+pr.resize(x, y, w, h)
+resize the pixel region so that it operates on the the region with corner (x, y) with dimensions w x h.
