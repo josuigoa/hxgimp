@@ -9,7 +9,7 @@ extern class GimpFu {
     
     // params tuple format:  (type, name, description, default [, extra]). 'type' is UInt (one of PF_* vars)
     static public function register(proc_name:String, definition:String, help:String, date:String, author:String, copyright:String, 
-                                    menupath:String, imagetypes:String, params:Array<python.Tuple.Tuple4<UInt, String, String, Dynamic>>, results:Array<Dynamic>, 
+                                    menupath:String, imagetypes:ImageType, params:Array<python.Tuple.Tuple4<UInt, String, String, Dynamic>>, results:Array<Dynamic>, 
                                     func:Dynamic):Void;
     
     static public function main():Void;

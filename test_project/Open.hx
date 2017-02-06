@@ -24,7 +24,7 @@ class Open {
 
     static function main() {
         GimpFu.register('open_xcf_from_haxe', 'Opens previously created XCF file', 'help text', '2017', 'josuigoa', 
-                        '2017', '<Toolbox>/Haxe/Gimp/Open', '', 
+                        '2017', '<Toolbox>/Haxe/Gimp/Open', gimp.ImageType.NONE, 
                         [gimp.Parameters.string('width', 'the width of the openned image', '400'), gimp.Parameters.string('height', 'the height of the openned image', '400')],
                         [], Open.func);
         GimpFu.main();

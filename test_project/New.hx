@@ -31,7 +31,7 @@ class New {
 
     static function main() {
         GimpFu.register('create_xcf_from_haxe', 'Creates a XCF file and saves it', 'help text', '2017', 'josuigoa', 
-                        '2017', '<Toolbox>/Haxe/Gimp/New', '', [], [], New.func);
+                        '2017', '<Toolbox>/Haxe/Gimp/New', gimp.ImageType.NONE, [], [], New.func);
         GimpFu.main();
         new New();
     }
