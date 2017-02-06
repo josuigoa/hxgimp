@@ -7,13 +7,13 @@ class Open {
 
     public function new() {}
     
-    static function func() {
+    static function func(new_width:String, new_height:String) {
         try {
             var f = 'd:/new_file.xcf';
             pdb.gimp_message('opening $f file');
             var image = pdb.gimp_file_load(f, f);
-            var w = image.width * 2;
-            var h = image.height * 2;
+            var w = Std.parseInt(new_width);
+            var h = Std.parseInt(new_height);
             pdb.gimp_image_scale(image, w, h);
             pdb.gimp_display_new(image);
         } catch(e:Dynamic) {
