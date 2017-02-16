@@ -42,10 +42,13 @@ class PDBParser {
 		
 		name = RE.space_ereg.replace(Std.string(lines.shift()), '').replace("\"", '').replace('-', '_').trim();
 		if (name == '') return '';
+		// description of the procedure
 		desc.push(Std.string(lines.shift()).replace('"', '').trim());
 		lines.shift(); // skip line 3
+		// creator info
 		desc.push('\t *   by ' + Std.string(lines.shift()).replace('"', '').trim());
 		lines.shift(); // skip line 5
+		// date
 		desc.push('\t *   ' + Std.string(lines.shift()).replace('\"', '').trim());
 		
 		trace( 'proc_name: $name' );
@@ -62,7 +65,6 @@ class PDBParser {
 				case 0:
 					if (RE.start_input_return_ereg.match(l)) {
 						state = 1;
-						desc.push('\t * @param');
 					}
 				case 1:
 					if (RE.start_input_return_ereg.match(l)) {
@@ -76,7 +78,7 @@ class PDBParser {
 						} else {
 							t = type_to_haxe(lines[l_ind++]);
 							d = lines[l_ind++].replace('"', '').trim();
-							desc.push('\t *    ${n} : ${t} -> ${d}');
+							desc.push('\t * @param ${n} : ${t} -> ${d}');
 							input_code_array.push('${n}:${t}');
 						}
 					}
@@ -102,8 +104,11 @@ class PDBParser {
 		
 		var ret = '\t/**\n\t * ${desc.join("\n")}\n\t */\n';
 		var func_line = '\tpublic function $name(${input_code}):${return_code};\n\n';
-		if (name.startsWith('plug_in') || name.startsWith('script_fu')) func_line = '// ' + func_line;
-		ret += func_line;
+		var is_deprecated = false;
+		for (d in desc) 
+			is_deprecated = is_deprecated || d.toLowerCase().indexOf('deprecated') != -1;
+		if (is_deprecated) ret = '';
+		else ret += func_line;
         
         return ret;
 	} //process_proc
