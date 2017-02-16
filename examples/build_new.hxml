@@ -1,0 +1,3 @@
+-lib hxgimp
+-main New
+-python bin/new_file.py

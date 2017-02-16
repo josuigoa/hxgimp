@@ -7,9 +7,8 @@ class New {
 
     public function new() {}
     
-    static function func() {
+    static function run(dir:String) {
         try {
-            var dir = 'd:/';
             var f = 'new_file.xcf';
             pdb.gimp_message('creating ${dir}${f} file');
             var image = pdb.gimp_image_new(100, 100, GimpFu.RGB_IMAGE);
@@ -31,7 +30,8 @@ class New {
 
     static function main() {
         GimpFu.register('create_xcf_from_haxe', 'Creates a XCF file and saves it', 'help text', '2017', 'josuigoa', 
-                        '2017', '<Toolbox>/Haxe/Gimp/New', gimp.ImageType.NONE, [], [], New.func);
+                        '2017', '<Toolbox>/Haxe plugins/New', gimp.ImageType.NONE, 
+                        [gimp.Parameters.dirname('save_dir', 'where do you want to save the new_file.xcf file?')], [], New.run);
         GimpFu.main();
         new New();
     }
