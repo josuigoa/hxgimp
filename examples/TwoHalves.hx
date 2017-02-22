@@ -16,7 +16,10 @@ class TwoHalves {
 
         var pages_dir = '${dir_path}/pages/';
         if (!sys.FileSystem.exists(pages_dir)) 
-            untyped python_lib_Os.mkdir(pages_dir, 511); // used 'untyped' because sys.FileSystem.createDirectory relies on os.mkdir(path, 511, true) and Gimp throws an error complaining the method os.mkdirs only accepts two parameters
+            untyped python_lib_Os.mkdir(pages_dir, 511); 
+            // used untyped because Haxe compiles to Python 3.x and Gimp uses Python 2.7.5. And this is one of the differences
+            // sys.FileSystem.createDirectory relies on os.mkdir(path, 511, true) and Gimp throws an error complaining 
+            // that the method os.mkdirs only accepts two parameters (path and mode)
             
         var img, img_w, img_h, img_copy, merged_layer, img_part, f_name, p_ind = 0;
         for (f in files) {
