@@ -5,4 +5,4 @@ Externs to create Gimp Python scripts with Haxe.
 > haxelib git hxgimp https://github.com/josuigoa/hxgimp
 
 ##Usage
-See `examples` folder
+See `example` folder
