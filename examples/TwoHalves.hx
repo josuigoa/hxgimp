@@ -55,6 +55,8 @@ class TwoHalves {
             pdb.gimp_selection_none(img);
 
             p_ind++;
+            pdb.gimp_image_remove_layer(img, merged_layer);
+            pdb.gimp_image_delete(img);
         }
     }
 
